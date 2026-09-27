@@ -1,0 +1,17 @@
+#!/bin/sh
+# Enforce Conventional Commits on the header line: type(scope)!: subject
+header=$(head -n1 "$1")
+
+echo "$header" | grep -Eq '^(Merge|Revert|fixup!|squash!) ' && exit 0
+
+if ! echo "$header" | grep -Eq '^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\([a-z0-9./-]+\))?!?: .{1,}$'; then
+	echo "commit-msg: header must follow Conventional Commits, e.g. 'feat(canvas): add zoom'" >&2
+	echo "  types: feat fix docs style refactor perf test build ci chore revert" >&2
+	echo "  got:   $header" >&2
+	exit 1
+fi
+
+if [ "${#header}" -gt 100 ]; then
+	echo "commit-msg: header is ${#header} chars, keep it <= 100" >&2
+	exit 1
+fi
