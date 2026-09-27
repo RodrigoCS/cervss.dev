@@ -1,0 +1,7 @@
+# Non-post canvas nodes. `id` is a unique kebab-case slug. Schema: src/content.config.ts
+- id: github
+  type: link
+  title: GitHub
+  url: https://github.com/rodrigocs
+  x: 400
+  y: -200
